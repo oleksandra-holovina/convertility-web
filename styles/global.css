@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: local("Nunito"), url(/public/fonts/nunito-300.woff) format("woff");
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: local("Nunito"), url(/public/fonts/nunito-300.woff2) format("woff2");
+}
+
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local("Nunito"), url(/public/fonts/nunito-700.woff) format("woff");
+}
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local("Nunito"), url(/public/fonts/nunito-700.woff2) format("woff2");
+}
+
+
+@font-face {
+    font-family: "PlayFair Display";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local("Nunito"), url(/public/fonts/playfair-display-700.woff) format("woff");
+}
+
+@font-face {
+    font-family: "PlayFair Display";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local("Nunito"), url(/public/fonts/playfair-display-700.woff2) format("woff2");
+}
+
+html {
+    @apply text-gray-700
+}
+
+h1, h1 > span, h3 {
+    font-family: "PlayFair Display", serif;
+}
+
+span, p, a, h2, h5 {
+    font-family: "Nunito", serif;
+}
