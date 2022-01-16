@@ -1,6 +1,7 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import axios from 'axios';
+import {withUser} from '../../api/auth';
 
 const FormItem = ({label, htmlFor, children}) => (
     <div className="flex flex-col space-y-2 w-full">
@@ -9,12 +10,14 @@ const FormItem = ({label, htmlFor, children}) => (
     </div>
 );
 
-const NewListing = () => {
+export const getServerSideProps = async (context) => withUser(context);
+
+const NewListing = ({profileUrl}) => {
     const handleCreate = async (e) => {
         e.preventDefault();
 
         const {title, description, technology, acceptanceCriteria, priceForDay, decreasePercentage} = e.target.elements;
-        try {
+        try { //todo: make sure authenticated
             await axios.post('http://localhost:8080/api/v1/job-listings', {
                 title: title.value,
                 description: description.value,
@@ -30,7 +33,7 @@ const NewListing = () => {
     return (
         <div>
             <div className="max-w-screen-lg m-auto">
-                <Header activeId={3}/>
+                <Header activeId={3} profileUrl={profileUrl}/>
                 <div className="mt-48">
                     <h1 className="text-4xl font-bold">Create New <span
                         className="text-blue-500">Project</span></h1>

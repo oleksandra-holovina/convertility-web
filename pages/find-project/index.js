@@ -6,8 +6,11 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import {withUser} from '../../api/auth';
 
-const JobList = () => {
+export const getServerSideProps = async (context) => withUser(context);
+
+const JobList = ({profileUrl}) => {
     const [listings, setListings] = useState([]);
     const [techIds, setTechIds] = useState([]);
 
@@ -29,7 +32,7 @@ const JobList = () => {
     return (
         <div className="m-auto">
             <div className="px-20">
-                <Header activeId={2}/>
+                <Header activeId={2} profileUrl={profileUrl}/>
                 <div className="flex space-x-10 mt-32">
                     <div className="mt-12 w-1/6">
                         <JobListingFilters selectedIds={techIds} setSelectedIds={setTechIds}/>
