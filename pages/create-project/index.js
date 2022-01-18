@@ -1,7 +1,9 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import axios from 'axios';
-import {withUser} from '../../api/auth';
+import {withPageAuthRequired} from '@auth0/nextjs-auth0';
+import Router from 'next/router'
+import {API_ROOT} from '../../constants';
 
 const FormItem = ({label, htmlFor, children}) => (
     <div className="flex flex-col space-y-2 w-full">
@@ -10,22 +12,24 @@ const FormItem = ({label, htmlFor, children}) => (
     </div>
 );
 
-export const getServerSideProps = async (context) => withUser(context);
+export const getServerSideProps = withPageAuthRequired();
 
-const NewListing = ({profileUrl}) => {
+const NewListing = ({user}) => {
     const handleCreate = async (e) => {
         e.preventDefault();
 
         const {title, description, technology, acceptanceCriteria, priceForDay, decreasePercentage} = e.target.elements;
-        try { //todo: make sure authenticated
-            await axios.post('http://localhost:8080/api/v1/job-listings', {
+        try {
+            await axios.post(`${API_ROOT}/job-listings`, {
                 title: title.value,
                 description: description.value,
-                techStack: technology.value.split('\n'),
+                techStack: technology.value.split('\n').map((v) => ({["name"]: v})) ,
                 acceptanceCriteria: acceptanceCriteria.value.split('\n'),
                 priceForDay: priceForDay.value,
-                decreasePercentage: decreasePercentage.value
+                decreasePercentage: decreasePercentage.value,
+                createdBy: user.sub
             });
+            await Router.push('/') //todo: redirect to my listings
         } catch (e) {
             //todo: handle
         }
@@ -33,12 +37,12 @@ const NewListing = ({profileUrl}) => {
     return (
         <div>
             <div className="max-w-screen-lg m-auto">
-                <Header activeId={3} profileUrl={profileUrl}/>
+                <Header activeId={3} profileUrl={user.picture}/>
                 <div className="mt-48">
                     <h1 className="text-4xl font-bold">Create New <span
                         className="text-blue-500">Project</span></h1>
 
-                    <form className="mt-10" onSubmit={handleCreate}>
+                    <form className="mt-10" onSubmit={handleCreate} method="POST">
                         <div className="flex space-x-10">
                             <div className="w-full space-y-5">
                                 <FormItem label="Title" htmlFor="title">
@@ -104,7 +108,6 @@ const NewListing = ({profileUrl}) => {
                             <button type="submit" className="font-bold text-lg text-white">Create</button>
                         </div>
                     </form>
-
                 </div>
             </div>
             <Footer />

@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image';
-import {LINKED_IN_REDIRECT} from '../api/auth';
 
 const links = [
     {id: 1, name: 'Home', url: '/'},
@@ -21,9 +20,8 @@ const ProfileImage = ({profileUrl}) => (
 const SignIn = () => (
     <div
         className="px-5 py-1 rounded-sm text-center cursor-pointer bg-gradient-to-br from-blue-400 to-blue-500">
-        <a href={LINKED_IN_REDIRECT}
-           className="text-lg text-white">Sign up / Log
-            in</a>
+        <a href="/api/auth/login"
+           className="text-lg text-white">Sign up / Log in</a>
     </div>
 )
 
@@ -35,7 +33,7 @@ const Header = ({activeId, profileUrl}) => {
                 {links.map(link => <Link href={link.url} key={link.id}>
                     <a className={`hover:underline uppercase text-sm ${activeId === link.id ? 'font-bold' : ''}`}>{link.name}</a>
                 </Link>)}
-                {profileUrl ? <ProfileImage profileUrl={profileUrl} /> : <SignIn />}
+                {profileUrl ? <ProfileImage profileUrl={profileUrl || "/images/blankUser.png"} /> : <SignIn />}
             </div>
         </header>
     )

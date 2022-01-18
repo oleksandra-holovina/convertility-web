@@ -1,10 +1,26 @@
-import Link from 'next/link'
+import axios from 'axios';
+import Router from 'next/router';
+import {API_ROOT} from '../../constants';
 
 const Technology = ({name}) => (
     <span className="rounded-full bg-gray-300 px-3 py-1">{name}</span>
 )
 
-const JobListing = ({listing}) => {
+const JobListing = ({listing, userId}) => {
+    const applyForJob = async () => {
+        try {
+            await axios.post(`${API_ROOT}/job-listings/${listing.id}`, {}, {
+                params: {
+                    userId: userId
+                }
+            })
+            await Router.push('/') //todo: redirect to my applications
+        } catch (e) {
+            //todo: handle
+            console.log(e);
+        }
+     }
+
     return (
         <div className="rounded-sm p-5 bg-white shadow-md h-92">
             <div className="space-y-5">
@@ -30,7 +46,7 @@ const JobListing = ({listing}) => {
                 <span onClick={() => {
                 }} className="underline block">More details</span>
                 <div className="w-1/2 py-1 rounded-sm text-center cursor-pointer bg-gradient-to-br from-orange-400 to-orange-500">
-                    <Link href="/apply"><a className="font-bold text-lg text-white">Apply</a></Link>
+                    <button onClick={applyForJob} className="font-bold text-lg text-white">Apply</button>
                 </div>
             </div>
         </div>

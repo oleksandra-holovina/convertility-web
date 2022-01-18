@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import {API_ROOT} from '../../constants';
 
 
 const Filter = ({name, options, selectedIds, setSelectedIds}) => {
-
     const handleCheck = (id) => {
         if (selectedIds.indexOf(id) === -1) {
             setSelectedIds([...selectedIds, id]);
@@ -33,7 +33,7 @@ const JobListingFilters = ({selectedIds, setSelectedIds}) => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await axios.get("http://localhost:8080/api/v1/tech-stack");
+                const response = await axios.get(`${API_ROOT}/tech-stack`);
                 setTechOptions(response.data);
             } catch (e) {
                 //todo: log

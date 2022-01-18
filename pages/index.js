@@ -2,15 +2,15 @@ import Header from '../components/Header';
 import Hero from './Hero';
 import About from './About';
 import Footer from '../components/Footer';
-import {withUser} from '../api/auth';
+import {withPageAuthRequired} from '@auth0/nextjs-auth0';
 
-export const getServerSideProps = async (context) => withUser(context);
+export const getServerSideProps = withPageAuthRequired();
 
-const Home = ({profileUrl}) => {
+const Home = ({user}) => {
     return (
         <div>
             <div className="max-w-screen-lg m-auto">
-                <Header activeId={1} profileUrl={profileUrl}/>
+                <Header activeId={1} profileUrl={user.picture}/>
                 <Hero />
                 <About />
             </div>
