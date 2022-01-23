@@ -19,7 +19,7 @@ const JobListingFilters = ({selectedIds, setSelectedIds}) => {
     }, []);
 
     return (
-        <div className="w-1/6">
+        <div>
             <h2 className="uppercase font-bold border-b border-gray-300 flex items-center pb-5 pt-3 space-x-2">
                 <AdjustmentsIcon
                     className="h-6 w-6 text-gray-400" />

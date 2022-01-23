@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const Hero = () => {
     return (
-        <div className="flex mt-48 space-x-48">
+        <div className="flex items-center mt-20 sm:mt-48 space-x-20 md:space-x-48">
             <div className="mt-20">
                 <h2 className="text-lg">Do faster to get paid extra</h2>
 
@@ -22,7 +22,7 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
-            <div className="w-2/6">
+            <div className="hidden sm:block w-2/6">
                 <Image src={Background} alt="Coder"/>
             </div>
         </div>

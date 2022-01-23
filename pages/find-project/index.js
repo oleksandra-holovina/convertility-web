@@ -31,15 +31,17 @@ const JobList = ({user}) => {
 
     return (
         <div>
-            <div className="max-w-screen-lg m-auto">
+            <div className="max-w-screen-lg m-auto px-5 sm:px-20 md:px-10">
                 <Header activeId={2} profileUrl={user.picture} />
-                <div className="flex space-x-10 mt-24">
-                    <JobListingFilters selectedIds={techIds}
-                                       setSelectedIds={setTechIds} />
+                <div className="flex md:space-x-10 mt-24">
+                    <div className="w-1/6 md:w-2/6 hidden md:block">
+                        <JobListingFilters selectedIds={techIds}
+                                           setSelectedIds={setTechIds} />
+                    </div>
 
-                    <div className="w-5/6">
+                    <div className="md:w-4/6 lg:w-5/6">
                         <Sort />
-                        <div className="grid grid-cols-2 gap-5 mt-5">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
                             {listings.map(listing => <JobListing
                                 key={listing.id} listing={listing}
                                 userId={user.sub} />)}

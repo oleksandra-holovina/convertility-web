@@ -39,12 +39,12 @@ const NewListing = ({user}) => {
 
     return (
         <div>
-            <div className="max-w-screen-lg m-auto">
+            <div className="max-w-screen-lg m-auto px-5 sm:px-10 md:px-20">
                 <Header activeId={3} profileUrl={user.picture} />
-                <div className="mt-24 flex space-x-10">
+                <div className="mt-24 flex flex-col lg:flex-row space-y-10 lg:space-y-0 lg:space-x-10">
                     <CreateProjectForm user={user} setTitle={setTitle} setDescription={setDescription} setTech={setTech} setPrice={setPrice} setDecreasePercentage={setDecreasePercentage}/>
 
-                    <div className="w-96 h-full">
+                    <div className="w-full lg:w-96 h-full">
                         <h2 className="text-2xl font-bold border-b border-gray-300 flex items-center pb-5 mb-5">
                             <PresentationChartBarIcon
                                 className="h-6 w-6 text-gray-600" />
@@ -59,11 +59,11 @@ const NewListing = ({user}) => {
                         }} showApplyButton={false} />
 
                         <div className="mt-8 flex space-x-3">
-                            <div className="w-full px-9 py-2 rounded-sm text-center cursor-pointer border border-gray-800">
-                                <button onClick={() => handleCreate(true)} className="font-bold text-lg">Save Draft</button>
+                            <div className="w-full md:px-9 py-2 rounded-sm text-center cursor-pointer border border-gray-800">
+                                <button onClick={() => handleCreate(true)} className="font-bold text-sm sm:text-lg">Save Draft</button>
                             </div>
-                            <div className="w-full px-9 py-2 rounded-sm text-center cursor-pointer bg-gradient-to-br from-gray-600 to-gray-800">
-                                <button onClick={() => handleCreate(false)} className="font-bold text-lg text-white">Post Listing</button>
+                            <div className="w-full md:px-9 py-2 rounded-sm text-center cursor-pointer bg-gradient-to-br from-gray-600 to-gray-800">
+                                <button onClick={() => handleCreate(false)} className="font-bold text-sm sm:text-lg text-white">Post Listing</button>
                             </div>
                         </div>
                     </div>

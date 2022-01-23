@@ -100,18 +100,18 @@ const CreateProjectForm = ({
 - I am able to upload a new picture
 - I can modify cat information" />
                 </FormItem>
-                <div className="flex space-x-5">
+                <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 sm:space-x-5">
                     <FormItem label="On time delivery price"
                               htmlFor="priceForDay">
                         <input
-                            className="py-1 px-3 shadow-md rounded-sm outline-1 outline-offset-2 outline-gray-400"
+                            className="py-1 pl-3 shadow-md rounded-sm outline-1 outline-offset-2 outline-gray-400"
                             id="priceForDay" name="priceForDay"
                             onChange={e => setPrice(e.target.value)}
                             placeholder="$5,000" />
                     </FormItem>
                     <FormItem label="Decrease Per Day">
                         <input
-                            className="py-1 px-3 shadow-md rounded-sm outline-1 outline-offset-2 outline-gray-400"
+                            className="py-1 pl-3 shadow-md rounded-sm outline-1 outline-offset-2 outline-gray-400"
                             id="decreasePercentage"
                             onChange={e => setDecreasePercentage(e.target.value)}
                             name="decreasePercentage"

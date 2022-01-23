@@ -9,7 +9,7 @@ export const getServerSideProps = withPageAuthRequired();
 const Home = ({user}) => {
     return (
         <div>
-            <div className="max-w-screen-lg m-auto">
+            <div className="max-w-screen-lg m-auto px-5">
                 <Header activeId={1} profileUrl={user.picture}/>
                 <Hero />
                 <About />

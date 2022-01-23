@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image';
+import {MenuIcon} from '@heroicons/react/outline';
 
 const links = [
     {id: 1, name: 'Home', url: '/'},
@@ -28,7 +29,8 @@ const Header = ({activeId, profileUrl}) => {
     return (
         <header className="flex justify-between items-center">
             <span className="font-bold">convertility</span>
-            <div className="space-x-10 flex items-center">
+            <MenuIcon className="h-6 w-6 text-gray-500 block sm:hidden" />
+            <div className="space-x-5 md:space-x-10 items-center hidden sm:flex">
                 {links.map(link => <Link href={link.url} key={link.id}>
                     <a className={`hover:underline uppercase text-sm ${activeId === link.id ? 'font-bold' : ''}`}>{link.name}</a>
                 </Link>)}

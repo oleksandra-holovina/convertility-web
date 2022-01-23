@@ -24,7 +24,7 @@ const JobListing = ({listing, userId, showApplyButton = true}) => {
 
         return (
             <div
-                className={`rounded-sm bg-white shadow-md h-92 flex flex-col justify-between ${showApplyButton ? '' : 'w-96'}`}>
+                className={`rounded-sm bg-white shadow-md h-92 flex flex-col justify-between ${showApplyButton ? '' : 'w-full md:w-96'}`}>
                 <div className="px-5 py-3">
                     <div className="space-y-2">
                         <h3 className="text-2xl font-bold truncate">{listing.title}</h3>
