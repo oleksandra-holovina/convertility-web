@@ -3,54 +3,71 @@ import Router from 'next/router';
 import {API_ROOT} from '../../constants';
 
 const Technology = ({name}) => (
-    <span className="rounded-full bg-gray-300 px-3 py-1">{name}</span>
+    <span
+        className="rounded-full bg-gray-200 px-3 py-1 text-gray-700">{name}</span>
 )
 
-const JobListing = ({listing, userId}) => {
-    const applyForJob = async () => {
-        try {
-            await axios.post(`${API_ROOT}/job-listings/${listing.id}`, {}, {
-                params: {
-                    userId: userId
-                }
-            })
-            await Router.push('/') //todo: redirect to my applications
-        } catch (e) {
-            //todo: handle
-            console.log(e);
+const JobListing = ({listing, userId, showApplyButton = true}) => {
+        const applyForJob = async () => {
+            try {
+                await axios.post(`${API_ROOT}/job-listings/${listing.id}`, {}, {
+                    params: {
+                        userId: userId
+                    }
+                })
+                await Router.push('/') //todo: redirect to my applications
+            } catch (e) {
+                //todo: handle
+                console.log(e);
+            }
         }
-     }
 
-    return (
-        <div className="rounded-sm p-5 bg-white shadow-md h-92">
-            <div className="space-y-5">
-                <h3 className="text-2xl font-bold text-gray-800">{listing.title}</h3>
-                <div className="space-x-2">
-                    {listing.techStack.map(tech => <Technology key={tech.id}
-                                                               name={tech.name} />)}
-                </div>
-                <p className="text-sm text-gray-700">{listing.description}</p>
-            </div>
-
-            <div className="mt-5 space-y-2">
-                <span className="font-bold text-sm">Can you get it done in 1 day?</span>
-                <span
-                    className="font-bold text-3xl text-blue-500 block">${listing.priceForDay}*</span>
-                <span
-                    className="block font-bold text-sm mt-1">every extra day -{listing.decreasePercentage}%</span>
-                <span className="text-xs text-gray-500 block mt-2">*has to pass acceptance criteria</span>
-            </div>
-
+        return (
             <div
-                className="mt-5 pt-5 flex justify-around items-center border-t border-gray-200">
-                <span onClick={() => {
-                }} className="underline block">More details</span>
-                <div className="w-1/2 py-1 rounded-sm text-center cursor-pointer bg-gradient-to-br from-orange-400 to-orange-500">
-                    <button onClick={applyForJob} className="font-bold text-lg text-white">Apply</button>
+                className={`rounded-sm bg-white shadow-md h-92 flex flex-col justify-between ${showApplyButton ? '' : 'w-96'}`}>
+                <div className="px-5 py-3">
+                    <div className="space-y-2">
+                        <h3 className="text-2xl font-bold truncate">{listing.title}</h3>
+                        <p className="uppercase text-xs text-gray-400">Created 2h
+                            ago</p>
+                        <p className="leading-relaxed text-gray-700 line-clamp-3">{listing.description}</p>
+                    </div>
+
+                    <div className="mt-5 flex space-x-7">
+                        <div className="w-1/2 border-r border-gray-300">
+                            <span
+                                className="font-bold text-xl block">${listing.priceForDay}</span>
+                            <span className="text-sm text-gray-500">On time delivery pay</span>
+                        </div>
+                        <div className="w-1/2">
+                            <span
+                                className="font-bold text-xl block">{listing.decreasePercentage}%</span>
+                            <span className="text-sm text-gray-500">Decrease per day</span>
+                        </div>
+                    </div>
+
+                    <div className="space-x-2 mt-8">
+                        {listing.techStack.map(tech => <Technology key={tech.id}
+                                                                   name={tech.name} />)}
+                    </div>
                 </div>
+                {showApplyButton && (
+                    <div className="flex items-center space-x-3 px-5 py-3">
+                        <div
+                            className="text-center rounded-sm cursor-pointer w-full border border-gray-400 py-1">
+                                <span onClick={() => {
+                                }} className="uppercase text-sm">More details</span>
+                        </div>
+                        <div className="rounded-br-sm text-center cursor-pointer w-full bg-gradient-to-br from-gray-600 to-gray-800  py-1.5">
+                                <span onClick={applyForJob} className="text-white uppercase text-sm font-bold ">
+                                    Apply
+                                </span>
+                        </div>
+                    </div>
+                )}
             </div>
-        </div>
-    )
-};
+        )
+    }
+;
 
 export default JobListing;

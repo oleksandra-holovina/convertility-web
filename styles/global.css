@@ -53,13 +53,13 @@
 }
 
 html {
-    @apply text-gray-700
+    @apply text-gray-600
 }
 
-h1, h1 > span, h3 {
+h1, h1 > span {
     font-family: "PlayFair Display", serif;
 }
 
-span, p, a, h2, h5 {
+span, p, a, h2, h3, h5 {
     font-family: "Nunito", serif;
 }

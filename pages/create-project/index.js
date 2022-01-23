@@ -1,113 +1,72 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import axios from 'axios';
 import {withPageAuthRequired} from '@auth0/nextjs-auth0';
-import Router from 'next/router'
+import CreateProjectForm from './CreateProjectForm';
+import JobListing from '../find-project/JobListing';
+import {PresentationChartBarIcon} from '@heroicons/react/outline';
+import {useState} from 'react';
+import axios from 'axios';
 import {API_ROOT} from '../../constants';
+import Router from 'next/router';
 
-const FormItem = ({label, htmlFor, children}) => (
-    <div className="flex flex-col space-y-2 w-full">
-        <label htmlFor={htmlFor}>{label}:</label>
-        {children}
-    </div>
-);
 
 export const getServerSideProps = withPageAuthRequired();
 
 const NewListing = ({user}) => {
-    const handleCreate = async (e) => {
-        e.preventDefault();
+    const [title, setTitle] = useState('Name goes here');
+    const [description, setDescription] = useState('Description goes here');
+    const [tech, setTech] = useState([{id: 1, name: 'Tech 1'}, {id: 2, name: 'Tech 2'}]);
+    const [price, setPrice] = useState(0);
+    const [decreasePercentage, setDecreasePercentage] = useState(0);
 
-        const {title, description, technology, acceptanceCriteria, priceForDay, decreasePercentage} = e.target.elements;
+    const handleCreate = async (isDraft) => {
         try {
             await axios.post(`${API_ROOT}/job-listings`, {
-                title: title.value,
-                description: description.value,
-                techStack: technology.value.split('\n').map((v) => ({["name"]: v})) ,
-                acceptanceCriteria: acceptanceCriteria.value.split('\n'),
-                priceForDay: priceForDay.value,
-                decreasePercentage: decreasePercentage.value,
-                createdBy: user.sub
+                title: title,
+                description: description,
+                techStack: tech.value.split('\n').map((v) => ({["name"]: v})), //todo: change
+                acceptanceCriteria: "acceptanceCriteria".split('\n'), //todo: change
+                priceForDay: price,
+                decreasePercentage: decreasePercentage,
+                createdBy: user.sub,
+                isDraft: isDraft //todo: add to api
             });
             await Router.push('/') //todo: redirect to my listings
         } catch (e) {
             //todo: handle
         }
     }
+
     return (
         <div>
             <div className="max-w-screen-lg m-auto">
-                <Header activeId={3} profileUrl={user.picture}/>
-                <div className="mt-48">
-                    <h1 className="text-4xl font-bold">Create New <span
-                        className="text-blue-500">Project</span></h1>
+                <Header activeId={3} profileUrl={user.picture} />
+                <div className="mt-24 flex space-x-10">
+                    <CreateProjectForm user={user} setTitle={setTitle} setDescription={setDescription} setTech={setTech} setPrice={setPrice} setDecreasePercentage={setDecreasePercentage}/>
 
-                    <form className="mt-10" onSubmit={handleCreate} method="POST">
-                        <div className="flex space-x-10">
-                            <div className="w-full space-y-5">
-                                <FormItem label="Title" htmlFor="title">
-                                    <input
-                                        className="py-1 px-3 shadow-md rounded-sm"
-                                        id="title" name="title"
-                                        placeholder="Need a website developer for my cat website" />
-                                </FormItem>
-                                <select multiple className="w-full" name="technology">
-                                    <option disabled selected>Select
-                                        technologies
-                                    </option>
-                                    <option value="java">Java</option>
-                                    <option value="javaScript">JavaScript</option>
-                                    <option value="aws">AWS</option>
-                                    <option value="terraform">Terraform</option>
-                                </select>
-                                <div className="flex space-x-5">
-                                    <FormItem label="Pay if done in 1 day"
-                                              htmlFor="priceForDay">
-                                        <input
-                                            className="py-1 px-3 shadow-md rounded-sm"
-                                            id="priceForDay" name="priceForDay"
-                                            placeholder="$5,000" />
-                                    </FormItem>
-                                    <FormItem label="Extra day decrease">
-                                        <input
-                                            className="py-1 px-3 shadow-md rounded-sm"
-                                            id="decreasePercentage"
-                                            name="decreasePercentage"
-                                            placeholder="5%" />
-                                    </FormItem>
-                                </div>
-                                <div
-                                    className="border border-gray-300 p-6 rounded-sm text-center cursor-pointer"
-                                    onClick={() => document.getElementById('file').click()}>
-                                    <input type="file" id="file"
-                                           className="hidden"
-                                           multiple />
-                                    <span className="text-gray-400">Upload additional resources (mockups, diagrams)...</span>
-                                </div>
+                    <div className="w-96 h-full">
+                        <h2 className="text-2xl font-bold border-b border-gray-300 flex items-center pb-5 mb-5">
+                            <PresentationChartBarIcon
+                                className="h-6 w-6 text-gray-600" />
+                            <span className="ml-2">Listing Preview</span>
+                        </h2>
+                        <JobListing listing={{
+                            title: title,
+                            description: description,
+                            techStack: tech,
+                            priceForDay: price,
+                            decreasePercentage: decreasePercentage
+                        }} showApplyButton={false} />
+
+                        <div className="mt-8 flex space-x-3">
+                            <div className="w-full px-9 py-2 rounded-sm text-center cursor-pointer border border-gray-800">
+                                <button onClick={() => handleCreate(true)} className="font-bold text-lg">Save Draft</button>
                             </div>
-                            <div className="w-full space-y-5">
-                                <FormItem label="Description"
-                                          htmlFor="description">
-                             <textarea
-                                 className="py-1 px-3 shadow-md rounded-sm resize-none h-32"
-                                 id="description" name="description"
-                                 placeholder="A website for displaying cat pictures..." />
-                                </FormItem>
-                                <FormItem label="Acceptance criteria"
-                                          htmlFor="acceptanceCriteria">
-                             <textarea
-                                 className="py-1 px-3 shadow-md rounded-sm resize-none h-32"
-                                 id="acceptanceCriteria" name="acceptanceCriteria"
-                                 placeholder="- I can see a list of cat pictures and info about cats
-- I am able to upload a new picture
-- I can modify cat information" />
-                                </FormItem>
+                            <div className="w-full px-9 py-2 rounded-sm text-center cursor-pointer bg-gradient-to-br from-gray-600 to-gray-800">
+                                <button onClick={() => handleCreate(false)} className="font-bold text-lg text-white">Post Listing</button>
                             </div>
                         </div>
-                        <div className="mt-10 w-1/6 mx-auto px-9 py-2 rounded-sm text-center cursor-pointer bg-gradient-to-br from-orange-400 to-orange-500">
-                            <button type="submit" className="font-bold text-lg text-white">Create</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             <Footer />

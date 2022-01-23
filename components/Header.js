@@ -5,7 +5,6 @@ const links = [
     {id: 1, name: 'Home', url: '/'},
     {id: 2, name: 'Find Project', url: '/find-project'},
     {id: 3, name: 'Create Project', url: '/create-project'},
-    {id: 4, name: 'About', url: '/about'},
 ]
 
 const ProfileImage = ({profileUrl}) => (
