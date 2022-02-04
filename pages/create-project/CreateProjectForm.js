@@ -1,15 +1,7 @@
 import {ViewGridAddIcon} from '@heroicons/react/solid';
 import {useState} from 'react';
 import {CurrencyDollarIcon} from '@heroicons/react/outline';
-
-const FormItem = ({label, htmlFor, children}) => (
-    <div className="flex flex-col space-y-2 w-full">
-        <label htmlFor={htmlFor}
-               className="uppercase text-sm text-gray-500 font-bold">{label}</label>
-        {children}
-    </div>
-);
-
+import FormItem from '../../components/FormItem';
 
 const CreateProjectForm = ({
                                setTitle,

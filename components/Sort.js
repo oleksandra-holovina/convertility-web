@@ -1,4 +1,5 @@
-import {ChevronDownIcon, SortAscendingIcon} from '@heroicons/react/solid';
+import {SortAscendingIcon} from '@heroicons/react/solid';
+import Dropdown from './Dropdown';
 
 const Sort = () => {
     return (
@@ -7,9 +8,8 @@ const Sort = () => {
                 <SortAscendingIcon className="h-5 w-5 text-gray-400" />
                 <span className="text-sm uppercase font-bold text-gray-400">Sort by</span>
             </div>
-            <div className="flex justify-between items-center bg-white border border-gray-200 pl-2 py-1 w-36">
-                <span className="text-sm text-gray-500">New to Old</span>
-                <ChevronDownIcon className="h-6 w-6 text-gray-400" />
+            <div className="w-36">
+                <Dropdown placeholder="New to Old" onSelect={() => {}} options={['New to Old', 'Old to New', 'Price High to Low', 'Price Low to High']} width="w-36"/>
             </div>
         </div>
     )

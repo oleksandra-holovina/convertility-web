@@ -10,10 +10,12 @@ const links = [
 
 const ProfileImage = ({profileUrl}) => (
     <div
-        className="rounded-full w-10 h-10 border border-gray-500 relative">
-        <Image src={profileUrl} alt="Profile picture"
-               className="rounded-full w-10 h-10"
-               layout="fill" />
+        className="rounded-full w-10 h-10 border border-gray-500 relative cursor-pointer">
+        <Link href="/my-account">
+            <Image src={profileUrl} alt="Profile picture"
+                   className="rounded-full w-10 h-10"
+                   layout="fill" />
+        </Link>
     </div>
 )
 
@@ -27,14 +29,18 @@ const SignIn = () => (
 
 const Header = ({activeId, profileUrl}) => {
     return (
-        <header className="flex justify-between items-center">
-            <span className="font-bold">convertility</span>
+        <header
+            className="flex justify-between items-center pt-5 relative z-50 max-w-screen-lg m-auto px-5 lg:px-0">
+            <span className="font-bold text-lg">convertility</span>
             <MenuIcon className="h-6 w-6 text-gray-500 block sm:hidden" />
-            <div className="space-x-5 md:space-x-10 items-center hidden sm:flex">
+            <div
+                className="space-x-5 md:space-x-10 items-center hidden sm:flex">
                 {links.map(link => <Link href={link.url} key={link.id}>
-                    <a className={`hover:underline uppercase text-sm ${activeId === link.id ? 'font-bold' : ''}`}>{link.name}</a>
+                    <a className={`hover:underline uppercase ${activeId === link.id ? 'font-bold' : ''}`}>{link.name}</a>
                 </Link>)}
-                {profileUrl ? <ProfileImage profileUrl={profileUrl || "/images/blankUser.png"} /> : <SignIn />}
+                {profileUrl ? <ProfileImage
+                        profileUrl={profileUrl || "/images/blankUser.png"} /> :
+                    <SignIn />}
             </div>
         </header>
     )

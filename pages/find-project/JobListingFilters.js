@@ -1,11 +1,13 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {API_ROOT} from '../../constants';
-import {AdjustmentsIcon, ChevronDownIcon} from '@heroicons/react/solid';
+import {AdjustmentsIcon} from '@heroicons/react/solid';
+import MultiselectDropdown from '../../components/MultiselectDropdown';
 
 
 const JobListingFilters = ({selectedIds, setSelectedIds}) => {
     const [techOptions, setTechOptions] = useState([]);
+
 
     useEffect(() => {
         (async () => {
@@ -28,11 +30,8 @@ const JobListingFilters = ({selectedIds, setSelectedIds}) => {
 
             <div className="mt-5 space-y-3">
                 <span className="text-sm uppercase font-bold text-gray-500">Tech Stack</span>
-                <div
-                    className="flex justify-between items-center bg-white border border-gray-200 pl-2 py-1 w-full">
-                    <span
-                        className="text-sm text-gray-500">Select technologies</span>
-                    <ChevronDownIcon className="h-6 w-6 text-gray-400" />
+                <div className="w-full">
+                    <MultiselectDropdown initialPlaceholder="Select technologies" options={techOptions.map(t => t.name)} width="w-full" multiple/>
                 </div>
             </div>
 

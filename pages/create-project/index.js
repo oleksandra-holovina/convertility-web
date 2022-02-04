@@ -8,6 +8,8 @@ import {useState} from 'react';
 import axios from 'axios';
 import {API_ROOT} from '../../constants';
 import Router from 'next/router';
+import Button from '../../components/Button';
+import WrapperLayout from '../../components/WrapperLayout';
 
 
 export const getServerSideProps = withPageAuthRequired();
@@ -24,23 +26,24 @@ const NewListing = ({user}) => {
             await axios.post(`${API_ROOT}/job-listings`, {
                 title: title,
                 description: description,
-                techStack: tech.value.split('\n').map((v) => ({["name"]: v})), //todo: change
-                acceptanceCriteria: "acceptanceCriteria".split('\n'), //todo: change
+                techStack: [],//tech.value.split('\n').map((v) => ({["name"]: v})), //todo: change
+                acceptanceCriteria: [],//"acceptanceCriteria".split('\n'), //todo: change
                 priceForDay: price,
                 decreasePercentage: decreasePercentage,
                 createdBy: user.sub,
-                isDraft: isDraft //todo: add to api
+                // isDraft: isDraft //todo: add to api
             });
             await Router.push('/') //todo: redirect to my listings
         } catch (e) {
+            console.log(e)
             //todo: handle
         }
     }
 
     return (
         <div>
-            <div className="max-w-screen-lg m-auto px-5 sm:px-10 md:px-20">
-                <Header activeId={3} profileUrl={user.picture} />
+            <Header activeId={3} profileUrl={user.picture} />
+            <WrapperLayout>
                 <div className="mt-24 flex flex-col lg:flex-row space-y-10 lg:space-y-0 lg:space-x-10">
                     <CreateProjectForm user={user} setTitle={setTitle} setDescription={setDescription} setTech={setTech} setPrice={setPrice} setDecreasePercentage={setDecreasePercentage}/>
 
@@ -59,16 +62,12 @@ const NewListing = ({user}) => {
                         }} showApplyButton={false} />
 
                         <div className="mt-8 flex space-x-3">
-                            <div className="w-full md:px-9 py-2 rounded-sm text-center cursor-pointer border border-gray-800">
-                                <button onClick={() => handleCreate(true)} className="font-bold text-sm sm:text-lg">Save Draft</button>
-                            </div>
-                            <div className="w-full md:px-9 py-2 rounded-sm text-center cursor-pointer bg-gradient-to-br from-gray-600 to-gray-800">
-                                <button onClick={() => handleCreate(false)} className="font-bold text-sm sm:text-lg text-white">Post Listing</button>
-                            </div>
+                            <Button title="Save Draft" onClick={() => handleCreate(true)} outline/>
+                            <Button title="Post Listing" onClick={() => handleCreate(false)} />
                         </div>
                     </div>
                 </div>
-            </div>
+            </WrapperLayout>
             <Footer />
         </div>
     )

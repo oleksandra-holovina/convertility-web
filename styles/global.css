@@ -52,14 +52,21 @@
     src: local("Nunito"), url(/public/fonts/playfair-display-700.woff2) format("woff2");
 }
 
+@layer utilities {
+    .clip-path-ellipse {
+        clip-path: ellipse(88% 90% at -11% 100%);
+    }
+}
+
 html {
-    @apply text-gray-600
+    @apply text-gray-600;
+    @apply bg-gray-100;
 }
 
-h1, h1 > span {
-    font-family: "PlayFair Display", serif;
-}
+/*h1, h1 > span {*/
+/*    font-family: "Nunito", serif;*/
+/*}*/
 
-span, p, a, h2, h3, h5 {
+* {
     font-family: "Nunito", serif;
 }

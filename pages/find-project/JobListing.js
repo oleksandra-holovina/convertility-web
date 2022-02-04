@@ -1,11 +1,8 @@
 import axios from 'axios';
 import Router from 'next/router';
 import {API_ROOT} from '../../constants';
-
-const Technology = ({name}) => (
-    <span
-        className="rounded-full bg-gray-200 px-3 py-1 text-gray-700">{name}</span>
-)
+import Button from '../../components/Button';
+import Tag from '../../components/Tag';
 
 const JobListing = ({listing, userId, showApplyButton = true}) => {
         const applyForJob = async () => {
@@ -47,22 +44,13 @@ const JobListing = ({listing, userId, showApplyButton = true}) => {
                     </div>
 
                     <div className="space-x-2 mt-8">
-                        {listing.techStack.map(tech => <Technology key={tech.id}
-                                                                   name={tech.name} />)}
+                        {listing.techStack.map(tech => <Tag key={tech.id} name={tech.name} />)}
                     </div>
                 </div>
                 {showApplyButton && (
                     <div className="flex items-center space-x-3 px-5 py-3">
-                        <div
-                            className="text-center rounded-sm cursor-pointer w-full border border-gray-400 py-1">
-                                <span onClick={() => {
-                                }} className="uppercase text-sm">More details</span>
-                        </div>
-                        <div className="rounded-br-sm text-center cursor-pointer w-full bg-gradient-to-br from-gray-600 to-gray-800  py-1.5">
-                                <span onClick={applyForJob} className="text-white uppercase text-sm font-bold ">
-                                    Apply
-                                </span>
-                        </div>
+                        <Button title="More details" onClick={() => {}} outline />
+                        <Button title="Apply" onClick={applyForJob} />
                     </div>
                 )}
             </div>
